@@ -1,4 +1,4 @@
-package gabri.dev.javaspringcompose.configs;
+package gabri.dev.minio.configs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.core.jackson.ModelResolver;

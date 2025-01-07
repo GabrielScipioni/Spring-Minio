@@ -1,4 +1,4 @@
-package gabri.dev.javaspringcompose.dtos.common;
+package gabri.dev.minio.dtos.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

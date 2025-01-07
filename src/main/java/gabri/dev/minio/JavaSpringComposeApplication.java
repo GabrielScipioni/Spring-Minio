@@ -1,4 +1,4 @@
-package gabri.dev.javaspringcompose;
+package gabri.dev.minio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

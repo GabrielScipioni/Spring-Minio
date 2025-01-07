@@ -1,6 +1,6 @@
-package gabri.dev.javaspringcompose.controllers;
+package gabri.dev.minio.controllers;
 
-import gabri.dev.javaspringcompose.dtos.common.ErrorApi;
+import gabri.dev.minio.dtos.common.ErrorApi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -4,13 +4,16 @@ import gabri.dev.minio.services.MinioBucketService;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
+import io.minio.RemoveBucketArgs;
 import io.minio.errors.*;
+import io.minio.messages.Bucket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("minioBucketService")
@@ -65,7 +68,12 @@ public class MinioBucketServiceImpl implements MinioBucketService {
             throws ServerException, InsufficientDataException, ErrorResponseException, IOException,
             NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException,
             XmlParserException, InternalException{
-        return null;
+        List<Bucket> buckets = minio.listBuckets();
+        List<String> names = new ArrayList<>();
+        buckets.forEach(b->{
+            names.add(b.name());
+        });
+        return names;
     }
 
     /**
@@ -88,7 +96,7 @@ public class MinioBucketServiceImpl implements MinioBucketService {
             throws ServerException, InsufficientDataException, ErrorResponseException, IOException,
             NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException,
             XmlParserException, InternalException{
-
+        minio.removeBucket(RemoveBucketArgs.builder().bucket(bucket).build());
     }
 
 }

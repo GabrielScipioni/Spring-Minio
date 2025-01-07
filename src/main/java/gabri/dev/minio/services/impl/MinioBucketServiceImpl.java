@@ -1,16 +1,23 @@
-package gabri.dev.minio.services;
+package gabri.dev.minio.services.impl;
 
+import gabri.dev.minio.services.MinioBucketService;
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
+import io.minio.MinioClient;
 import io.minio.errors.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-/**
- * Servicio que define las operaciones relacionadas con la gestión de buckets en el servidor MinIO.
- */
-public interface MinioBucketService {
+@Service("minioBucketService")
+public class MinioBucketServiceImpl implements MinioBucketService {
+
+    @Autowired
+    MinioClient minio;
 
     /**
      * Crea un bucket en el servidor MinIO con el nombre especificado.
@@ -27,10 +34,16 @@ public interface MinioBucketService {
      * @throws XmlParserException si ocurre un error al analizar la respuesta en formato XML del servidor.
      * @throws InternalException si ocurre un error interno en el cliente durante la ejecución de la operación.
      */
-    void createBucket(String bucket)
+    @Override
+    public void createBucket(String bucket)
             throws ServerException, InsufficientDataException, ErrorResponseException, IOException,
             NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException,
-            XmlParserException, InternalException;
+            XmlParserException, InternalException{
+        boolean found = minio.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
+        if (!found) {
+            minio.makeBucket(MakeBucketArgs.builder().bucket(bucket).build());
+        }
+    }
 
     /**
      * Obtiene una lista con los nombres de todos los buckets existentes en el servidor MinIO.
@@ -47,10 +60,13 @@ public interface MinioBucketService {
      * @throws XmlParserException si ocurre un error al analizar la respuesta en formato XML del servidor.
      * @throws InternalException si ocurre un error interno en el cliente durante la ejecución de la operación.
      */
-    List<String> listBuckets()
+    @Override
+    public List<String> listBuckets()
             throws ServerException, InsufficientDataException, ErrorResponseException, IOException,
             NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException,
-            XmlParserException, InternalException;
+            XmlParserException, InternalException{
+        return null;
+    }
 
     /**
      * Elimina un bucket existente en el servidor MinIO con el nombre especificado.
@@ -67,9 +83,12 @@ public interface MinioBucketService {
      * @throws XmlParserException si ocurre un error al analizar la respuesta en formato XML del servidor.
      * @throws InternalException si ocurre un error interno en el cliente durante la ejecución de la operación.
      */
-    void deleteBucket(String bucket)
+    @Override
+    public void deleteBucket(String bucket)
             throws ServerException, InsufficientDataException, ErrorResponseException, IOException,
             NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException,
-            XmlParserException, InternalException;
+            XmlParserException, InternalException{
+
+    }
 
 }
